@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brilliant Mind Tutorials - Find Best Home Tutors</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230f172a'/><circle cx='50' cy='40' r='16' fill='none' stroke='%23fbbf24' stroke-width='6'/><path d='M50 24 L50 10 M50 56 L50 70 M34 40 L20 40 M66 40 L80 40' stroke='%23fbbf24' stroke-width='5' stroke-linecap='round'/><text x='50' y='88' font-size='20' text-anchor='middle' fill='%23fbbf24' font-weight='bold'>BMT</text></svg>">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body { background: #f8fafc; color: #0f172a; }
+
+  /* ============ NAVBAR ============ */
+  .navbar {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    padding: 12px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .brand-logo {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(251,191,36,0.4);
+  }
+  .brand-logo svg { width: 32px; height: 32px; }
+  .brand-text { color: white; font-weight: 700; font-size: 18px; line-height: 1.1; }
+  .brand-text small {
+    display: block; font-size: 10px; color: #fbbf24;
+    letter-spacing: 3px; font-weight: 600; margin-top: 2px;
+  }
+  .nav-links { display: flex; gap: 22px; list-style: none; align-items: center; }
+  .nav-links a, .nav-links span {
+    color: #cbd5e1; text-decoration: none; font-weight: 500; cursor: pointer;
+    transition: 0.3s; font-size: 15px;
+  }
+  .nav-links a:hover, .nav-links span:hover { color: #fbbf24; }
+
+  .bell-icon {
+    position: relative; cursor: pointer; color: #cbd5e1;
+    font-size: 20px; padding: 6px;
+  }
+  .bell-icon:hover { color: #fbbf24; }
+  .bell-badge {
+    position: absolute; top: 0; right: 0;
+    background: #ef4444; color: white; font-size: 10px;
+    border-radius: 50%; width: 18px; height: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+  }
+
+  .btn-sm {
+    padding: 8px 18px; border-radius: 8px; font-weight: 600;
+    border: 2px solid #fbbf24; background: transparent; color: #fbbf24;
+    cursor: pointer; font-size: 14px; transition: 0.3s;
+  }
+  .btn-sm:hover { background: #fbbf24; color: #0f172a; }
+  .btn-sm-primary {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #0f172a; border: none;
+  }
+  .btn-sm-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(251,191,36,0.4); }
+
+  /* ============ PAGES ============ */
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.4s; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ============ HERO ============ */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #3b82f6 100%);
+    color: white; text-align: center; padding: 70px 20px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(251,191,36,0.1) 0%, transparent 70%);
+    animation: rotate 30s linear infinite;
+  }
+  @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .hero-content { position: relative; z-index: 1; }
+  .hero h1 { font-size: 46px; margin-bottom: 15px; font-weight: 800; }
+  .hero h1 span { color: #fbbf24; }
+  .hero p { font-size: 18px; margin-bottom: 30px; opacity: 0.95; }
+  
+  .search-box {
+    display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+    max-width: 900px; margin: 0 auto;
+  }
+  .search-box input, .search-box select {
+    padding: 15px 20px; border-radius: 12px; border: none;
+    font-size: 16px; width: 240px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    outline: none; transition: 0.3s;
+  }
+  .search-box input:focus, .search-box select:focus { box-shadow: 0 4px 20px rgba(251,191,36,0.5); }
+  .search-box button {
+    padding: 15px 32px; background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #0f172a; border: none; border-radius: 12px;
+    font-weight: bold; cursor: pointer; font-size: 16px;
+    box-shadow: 0 4px 15px rgba(251,191,36,0.4);
+    transition: 0.3s;
+  }
+  .search-box button:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(251,191,36,0.6); }
+
+  /* ============ STATS BAR ============ */
+  .stats-bar {
+    background: white; display: flex; justify-content: space-around;
+    padding: 25px 40px; margin: -40px auto 0;
+    max-width: 900px; border-radius: 18px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+    position: relative; z-index: 2;
+    flex-wrap: wrap; gap: 15px;
+  }
+  .stat-item { text-align: center; }
+  .stat-item h3 { color: #0f172a; font-size: 28px; font-weight: 800; }
+  .stat-item h3 span { color: #f59e0b; }
+  .stat-item p { color: #64748b; font-size: 13px; font-weight: 500; margin-top: 3px; }
+
+  /* ============ SECTION TITLE ============ */
+  .section-title {
+    text-align: center; padding: 50px 20px 20px;
+  }
+  .section-title h2 { color: #0f172a; font-size: 32px; margin-bottom: 8px; font-weight: 800; }
+  .section-title h2 span { color: #f59e0b; }
+  .section-title p { color: #64748b; font-size: 15px; }
+  .section-title::after {
+    content: ''; display: block; width: 60px; height: 4px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    margin: 15px auto 0; border-radius: 2px;
+  }
+
+  /* ============ FILTERS ============ */
+  .filters {
+    display: flex; justify-content: center; gap: 12px;
+    padding: 25px 20px; flex-wrap: wrap;
+  }
+  .filters button {
+    padding: 9px 20px; border-radius: 25px;
+    border: 2px solid #e2e8f0;
+    background: white; color: #475569;
+    cursor: pointer; font-weight: 600; font-size: 14px;
+    transition: 0.3s;
+  }
+  .filters button.active, .filters button:hover {
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    color: white; border-color: #0f172a;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(15,23,42,0.3);
+  }
+
+  /* ============ TEACHERS GRID ============ */
+  .teachers {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 25px; padding: 20px 60px 60px;
+    max-width: 1400px; margin: 0 auto;
+  }
+  .card {
+    background: white; border-radius: 18px; padding: 28px 22px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: 0.35s; text-align: center;
+    border: 2px solid transparent;
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24);
+    transform: scaleX(0); transition: 0.4s;
+  }
+  .card:hover::before { transform: scaleX(1); }
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(15,23,42,0.15);
+    border-color: #fbbf24;
+  }
+  .card img {
+    width: 95px; height: 95px; border-radius: 50%;
+    margin-bottom: 15px;
+    border: 4px solid #fbbf24;
+    box-shadow: 0 5px 15px rgba(251,191,36,0.3);
+  }
+  .card h3 { color: #0f172a; margin-bottom: 5px; font-size: 19px; }
+  .card .subject {
+    display: inline-block;
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    color: #1e40af; padding: 4px 12px; border-radius: 20px;
+    font-size: 13px; font-weight: 600; margin-bottom: 12px;
+  }
+  .card .info { font-size: 14px; color: #475569; margin: 6px 0; }
+  .card .info strong { color: #0f172a; }
+  .card .topics {
+    font-size: 12px; color: #64748b; margin: 10px 0;
+    padding: 10px; background: #f8fafc; border-radius: 10px;
+    line-height: 1.5; max-height: 60px; overflow: hidden;
+  }
+  .card .fee {
+    color: #059669; font-weight: 800; font-size: 20px;
+    margin: 14px 0 6px;
+  }
+  .card .fee small { font-size: 12px; color: #64748b; font-weight: 500; }
+  .card button {
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    color: white; border: none;
+    padding: 11px 28px; border-radius: 10px; cursor: pointer;
+    font-weight: 600; margin-top: 12px; transition: 0.3s;
+    font-size: 14px;
+  }
+  .card button:hover {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #0f172a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(251,191,36,0.4);
+  }
+
+  /* ============ SUBJECTS SECTION ============ */
+  .subjects-section {
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  }
+  .subjects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px; max-width: 1200px; margin: 30px auto 0;
+  }
+  .subject-card {
+    background: white; padding: 25px; border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    cursor: pointer; transition: 0.3s;
+    border-left: 5px solid #3b82f6;
+  }
+  .subject-card:hover {
+    transform: translateX(8px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    border-left-color: #f59e0b;
+  }
+  .subject-card h4 { color: #0f172a; font-size: 18px; margin-bottom: 8px; }
+  .subject-card p { color: #64748b; font-size: 13px; line-height: 1.6; }
+
+  /* ============ ABOUT ============ */
+  .about { padding: 60px 40px; text-align: center; background: white; }
+  .about h2 { color: #0f172a; font-size: 32px; margin-bottom: 40px; }
+  .about h2 span { color: #f59e0b; }
+  .features {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px; max-width: 1100px; margin: 0 auto;
+  }
+  .feature {
+    padding: 30px 25px; border-radius: 16px;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border: 2px solid #e2e8f0;
+    transition: 0.3s;
+  }
+  .feature:hover {
+    transform: translateY(-8px);
+    border-color: #fbbf24;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  }
+  .feature-icon {
+    width: 60px; height: 60px; margin: 0 auto 15px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+  }
+  .feature h3 { color: #0f172a; margin-bottom: 10px; font-size: 18px; }
+  .feature p { color: #64748b; font-size: 14px; line-height: 1.6; }
+
+  /* ============ AUTH ============ */
+  .auth-wrap {
+    min-height: calc(100vh - 72px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #0f172a, #1e3a8a, #3b82f6);
+  }
+  .auth-box {
+    background: white; padding: 45px 38px; border-radius: 22px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+    width: 100%; max-width: 440px; text-align: center;
+    border-top: 5px solid #fbbf24;
+  }
+  .auth-box h2 { color: #0f172a; margin-bottom: 8px; font-size: 26px; font-weight: 800; }
+  .auth-sub { color: #64748b; margin-bottom: 28px; font-size: 14px; }
+  .auth-box input {
+    width: 100%; padding: 14px 16px; margin-bottom: 14px;
+    border: 2px solid #e2e8f0; border-radius: 11px;
+    font-size: 15px; transition: 0.3s; outline: none;
+  }
+  .auth-box input:focus { border-color: #fbbf24; box-shadow: 0 0 0 4px rgba(251,191,36,0.15); }
+  .auth-btn {
+    width: 100%; padding: 15px;
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    color: white; border: none; border-radius: 11px;
+    font-weight: bold; cursor: pointer; font-size: 16px;
+    margin-top: 6px; transition: 0.3s;
+  }
+  .auth-btn:hover {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #0f172a; transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(251,191,36,0.4);
+  }
+  .auth-switch { margin-top: 22px; font-size: 14px; color: #64748b; }
+  .auth-switch a { color: #1e40af; font-weight: 700; text-decoration: none; cursor: pointer; }
+  .auth-switch a:hover { color: #f59e0b; }
+
+  /* ============ DASHBOARD ============ */
+  .dashboard { padding: 30px 50px; max-width: 1400px; margin: 0 auto; }
+  .dash-header { margin-bottom: 30px; }
+  .dash-header h1 { color: #0f172a; font-size: 32px; margin-bottom: 5px; font-weight: 800; }
+  .dash-header p { color: #64748b; }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; margin-bottom: 30px;
+  }
+  .stat-card {
+    background: white; padding: 25px; border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    text-align: center;
+    border-left: 5px solid #3b82f6;
+    transition: 0.3s;
+  }
+  .stat-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
+  .stat-card h3 { color: #0f172a; font-size: 34px; margin-bottom: 5px; font-weight: 800; }
+  .stat-card p { color: #64748b; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .dash-section {
+    background: white; padding: 30px; border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06); margin-bottom: 30px;
+  }
+  .dash-section h2 {
+    color: #0f172a; margin-bottom: 22px; font-size: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .admin-form {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .admin-form input, .admin-form select, .admin-form textarea {
+    padding: 12px; border: 2px solid #e2e8f0; border-radius: 9px;
+    font-size: 14px; outline: none; transition: 0.3s;
+    font-family: inherit;
+  }
+  .admin-form input:focus, .admin-form select:focus, .admin-form textarea:focus {
+    border-color: #fbbf24; box-shadow: 0 0 0 3px rgba(251,191,36,0.15);
+  }
+  .admin-form textarea { resize: vertical; min-height: 60px; }
+  .admin-form button {
+    padding: 12px; background: linear-gradient(135deg, #059669, #10b981);
+    color: white; border: none; border-radius: 9px;
+    font-weight: bold; cursor: pointer; font-size: 15px;
+    transition: 0.3s;
+  }
+  .admin-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(16,185,129,0.4); }
+
+  .full-width { grid-column: 1 / -1; }
+
+  .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .data-table th, .data-table td {
+    padding: 13px 12px; border-bottom: 1px solid #e2e8f0;
+    text-align: left; font-size: 13px;
+  }
+  .data-table th {
+    background: #f8fafc; color: #0f172a;
+    font-weight: 700; text-transform: uppercase;
+    font-size: 11px; letter-spacing: 0.5px;
+  }
+  .data-table tr:hover { background: #f8fafc; }
+
+  .action-btn {
+    padding: 6px 12px; border-radius: 6px; cursor: pointer;
+    font-size: 12px; font-weight: 600; border: none;
+    margin-right: 5px; transition: 0.2s;
+  }
+  .edit-btn { background: #3b82f6; color: white; }
+  .edit-btn:hover { background: #2563eb; }
+  .delete-btn { background: #dc2626; color: white; }
+  .delete-btn:hover { background: #b91c1c; }
+
+  /* ============ MODAL ============ */
+  .modal {
+    display: none; position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%; background: rgba(15,23,42,0.75);
+    justify-content: center; align-items: center; z-index: 200;
+    padding: 20px;
+  }
+  .modal.active { display: flex; }
+  .modal-content {
+    background: white; padding: 32px; border-radius: 18px;
+    width: 100%; max-width: 480px;
+    max-height: 90vh; overflow-y: auto;
+    animation: modalIn 0.3s;
+  }
+  @keyframes modalIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-content h3 { color: #0f172a; margin-bottom: 8px; font-size: 22px; }
+  .modal-content .teacher-name { color: #1e40af; font-weight: 700; margin-bottom: 18px; }
+  .modal-content input, .modal-content textarea {
+    width: 100%; padding: 13px; margin-bottom: 12px;
+    border: 2px solid #e2e8f0; border-radius: 10px;
+    font-size: 15px; outline: none; font-family: inherit;
+  }
+  .modal-content input:focus, .modal-content textarea:focus { border-color: #fbbf24; }
+  .modal-content button {
+    width: 100%; padding: 13px;
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    color: white; border: none; border-radius: 10px;
+    font-weight: bold; cursor: pointer; margin-bottom: 8px;
+    font-size: 15px;
+  }
+  .modal-content button:hover { opacity: 0.9; }
+  .close-btn { background: #dc2626 !important; }
+  .close-btn:hover { background: #b91c1c !important; }
+
+  /* ============ NOTIFICATION PANEL ============ */
+  .notif-panel {
+    position: fixed; top: 70px; right: 20px;
+    width: 360px; max-height: 500px; overflow-y: auto;
+    background: white; border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    z-index: 300;
+    display: none;
+    animation: slideIn 0.3s;
+  }
+  @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  .notif-panel.active { display: block; }
+  .notif-header {
+    padding: 18px 20px; border-bottom: 2px solid #f1f5f9;
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; background: white; z-index: 1;
+  }
+  .notif-header h3 { color: #0f172a; font-size: 17px; }
+  .notif-header button {
+    background: transparent; border: none; color: #64748b;
+    cursor: pointer; font-size: 20px;
+  }
+  .notif-item {
+    padding: 15px 20px; border-bottom: 1px solid #f1f5f9;
+    transition: 0.2s; cursor: pointer;
+  }
+  .notif-item:hover { background: #f8fafc; }
+  .notif-item.unread { background: #fef3c7; border-left: 4px solid #f59e0b; }
+  .notif-item h4 { color: #0f172a; font-size: 14px; margin-bottom: 5px; }
+  .notif-item p { color: #64748b; font-size: 12px; line-height: 1.5; }
+  .notif-item small { color: #94a3b8; font-size: 11px; }
+  .notif-empty { padding: 40px 20px; text-align: center; color: #94a3b8; }
+
+  /* ============ TOAST ============ */
+  .toast {
+    position: fixed; top: 90px; right: 20px;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: white; padding: 16px 24px;
+    border-radius: 12px; font-weight: 600; z-index: 999;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform: translateX(450px); transition: 0.4s;
+    max-width: 350px; font-size: 14px;
+  }
+  .toast.show { transform: translateX(0); }
+  .toast.error { background: linear-gradient(135deg, #dc2626, #ef4444); }
+  .toast.info { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #cbd5e1; text-align: center; padding: 30px 20px;
+    margin-top: 60px;
+  }
+  footer p { font-size: 14px; }
+  footer .footer-brand { color: #fbbf24; font-weight: bold; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 768px) {
+    .navbar { padding: 12px 18px; flex-direction: column; gap: 12px; }
+    .nav-links { gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .hero h1 { font-size: 28px; }
+    .hero { padding: 50px 15px 70px; }
+    .search-box input, .search-box select { width: 100%; }
+    .teachers { padding: 20px; gap: 18px; }
+    .dashboard { padding: 20px; }
+    .data-table { font-size: 11px; }
+    .data-table th, .data-table td { padding: 8px 6px; }
+    .notif-panel { width: calc(100% - 30px); right: 15px; }
+    .brand-text { font-size: 15px; }
+    .stats-bar { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== NAVBAR ==================== -->
+<nav class="navbar">
+  <div class="brand" onclick="showPage('home')">
+    <div class="brand-logo">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M12 3 L12 21 M3 12 L21 12 M5 5 L19 19 M19 5 L5 19" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="3" fill="#0f172a"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      Brilliant Mind
+      <small>TUTORIALS</small>
+    </div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="showPage('home')">Home</a></li>
+    <li><a onclick="showPage('home'); setTimeout(()=>document.getElementById('teachersSection').scrollIntoView({behavior:'smooth'}),100)">Teachers</a></li>
+    <li><a onclick="showPage('home'); setTimeout(()=>document.getElementById('subjectsSection').scrollIntoView({behavior:'smooth'}),100)">Subjects</a></li>
+    <li id="bellWrap" style="display:none;">
+      <div class="bell-icon" onclick="toggleNotifPanel()">
+        🔔
+        <span class="bell-badge" id="bellBadge" style="display:none;">0</span>
+      </div>
+    </li>
+    <li id="navAuth">
+      <button class="btn-sm" onclick="showPage('login')">Login</button>
+      <button class="btn-sm btn-sm-primary" onclick="showPage('signup')">Sign Up</button>
+    </li>
+  </ul>
+</nav>
+
+<!-- ==================== NOTIFICATION PANEL ==================== -->
+<div class="notif-panel" id="notifPanel">
+  <div class="notif-header">
+    <h3>🔔 Notifications</h3>
+    <button onclick="toggleNotifPanel()">✕</button>
+  </div>
+  <div id="notifList"></div>
+</div>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Find Your <span>Perfect Tutor</span></h1>
+      <p>Delhi • Noida • Ghaziabad — Trusted by 5000+ parents</p>
+      <div class="search-box">
+        <input type="text" id="searchName" placeholder="🔍 Teacher name or subject...">
+        <select id="searchCity">
+          <option value="">📍 All Cities</option>
+          <option>Delhi</option>
+          <option>Noida</option>
+          <option>Ghaziabad</option>
+          <option>Greater Noida</option>
+          <option>Faridabad</option>
+          <option>Gurgaon</option>
+        </select>
+        <select id="searchSubject">
+          <option value="">📚 All Subjects</option>
+          <option>Mathematics</option>
+          <option>Science</option>
+          <option>Physics</option>
+          <option>Chemistry</option>
+          <option>Biology</option>
+          <option>English</option>
+          <option>Hindi</option>
+          <option>Social Science</option>
+          <option>Computer Science</option>
+          <option>Accountancy</option>
+          <option>Business Studies</option>
+          <option>Economics</option>
+        </select>
+        <button onclick="searchTeachers()">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stat-item"><h3><span>500+</span></h3><p>Expert Tutors</p></div>
+    <div class="stat-item"><h3><span>5000+</span></h3><p>Happy Parents</p></div>
+    <div class="stat-item"><h3><span>15+</span></h3><p>Subjects</p></div>
+    <div class="stat-item"><h3><span>4.9</span>★</h3><p>Avg Rating</p></div>
+  </div>
+
+  <div id="teachersSection"></div>
+  <div class="section-title">
+    <h2>Our <span>Expert Tutors</span></h2>
+    <p>Handpicked & verified teachers for your child</p>
+  </div>
+
+  <div class="filters">
+    <button class="active" onclick="filterSubject('all', this)">All Subjects</button>
+    <button onclick="filterSubject('Mathematics', this)">Mathematics</button>
+    <button onclick="filterSubject('Science', this)">Science</button>
+    <button onclick="filterSubject('Physics', this)">Physics</button>
+    <button onclick="filterSubject('Chemistry', this)">Chemistry</button>
+    <button onclick="filterSubject('English', this)">English</button>
+    <button onclick="filterSubject('Computer Science', this)">Computer</button>
+    <button onclick="filterSubject('Accountancy', this)">Accountancy</button>
+  </div>
+
+  <div class="teachers" id="teachers"></div>
+
+  <div id="subjectsSection"></div>
+  <section class="subjects-section">
+    <div class="section-title">
+      <h2>Popular <span>Subjects</span></h2>
+      <p>Click on any subject to see teachers</p>
+    </div>
+    <div class="subjects-grid" id="subjectsGrid"></div>
+  </section>
+
+  <section class="about">
+    <h2>Why <span>Brilliant Mind Tutorials</span>?</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">✅</div>
+        <h3>Verified Teachers</h3>
+        <p>Har teacher background check aur demo class ke baad hi select hota hai</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💰</div>
+        <h3>Affordable Fees</h3>
+        <p>Budget friendly packages — Delhi, Noida, Ghaziabad mein best rates</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <h3>Fast Response</h3>
+        <p>24 ghante ke andar aapko teacher ka contact mil jayega</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📚</div>
+        <h3>All Subjects</h3>
+        <p>Class 1 se 12 tak — Maths, Science, English, Commerce, Computer sab kuch</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== LOGIN PAGE ==================== -->
+<div class="page" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-box">
+      <h2>Welcome Back</h2>
+      <p class="auth-sub">Login to your account</p>
+      <input type="email" id="loginEmail" placeholder="Email Address">
+      <input type="password" id="loginPassword" placeholder="Password">
+      <button class="auth-btn" onclick="loginUser()">Login</button>
+      <p class="auth-switch">Don't have an account? <a onclick="showPage('signup')">Sign Up</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SIGNUP PAGE ==================== -->
+<div class="page" id="page-signup">
+  <div class="auth-wrap">
+    <div class="auth-box">
+      <h2>Create Account</h2>
+      <p class="auth-sub">Join as Parent or Student</p>
+      <input type="text" id="signupName" placeholder="Full Name">
+      <input type="email" id="signupEmail" placeholder="Email Address">
+      <input type="text" id="signupPhone" placeholder="Phone Number">
+      <input type="password" id="signupPassword" placeholder="Password (min 6 chars)">
+      <input type="password" id="signupConfirm" placeholder="Confirm Password">
+      <button class="auth-btn" onclick="signupUser()">Sign Up</button>
+      <p class="auth-switch">Already have an account? <a onclick="showPage('login')">Login</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DASHBOARD PAGE ==================== -->
+<div class="page" id="page-dashboard">
+  <div class="dashboard">
+    <div class="dash-header">
+      <h1>Admin Dashboard</h1>
+      <p>Welcome back, <span id="adminName" style="color:#f59e0b;font-weight:700;"></span></p>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card"><h3 id="totalTeachers">0</h3><p>Total Teachers</p></div>
+      <div class="stat-card"><h3 id="totalRequests">0</h3><p>Total Requests</p></div>
+      <div class="stat-card"><h3 id="totalUsers">0</h3><p>Total Users</p></div>
+      <div class="stat-card"><h3 id="totalNotifs">0</h3><p>Notifications</p></div>
+    </div>
+
+    <div class="dash-section">
+      <h2 id="formTitle">➕ Add New Teacher</h2>
+      <div class="admin-form">
+        <input type="hidden" id="editId">
+        <input type="text" id="tName" placeholder="Teacher Name *">
+        <select id="tSubject">
+          <option value="">Select Subject *</option>
+          <option>Mathematics</option>
+          <option>Science</option>
+          <option>Physics</option>
+          <option>Chemistry</option>
+          <option>Biology</option>
+          <option>English</option>
+          <option>Hindi</option>
+          <option>Social Science</option>
+          <option>Computer Science</option>
+          <option>Accountancy</option>
+          <option>Business Studies</option>
+          <option>Economics</option>
+        </select>
+        <select id="tCity">
+          <option value="">Select City *</option>
+          <option>Delhi</option>
+          <option>Noida</option>
+          <option>Ghaziabad</option>
+          <option>Greater Noida</option>
+          <option>Faridabad</option>
+          <option>Gurgaon</option>
+        </select>
+        <input type="number" id="tFee" placeholder="Monthly Fee (₹) *">
+        <input type="text" id="tPhone" placeholder="Phone Number *">
+        <input type="text" id="tExp" placeholder="Experience (e.g. 5 years)">
+        <textarea id="tTopics" class="full-width" placeholder="Topics covered (comma separated) e.g. Algebra, Geometry, Trigonometry, Calculus"></textarea>
+        <textarea id="tDetails" class="full-width" placeholder="Additional details / Qualification / Achievements"></textarea>
+        <button onclick="saveTeacher()" id="saveBtn" style="grid-column: 1 / -1;">Add Teacher</button>
+        <button onclick="resetForm()" id="cancelBtn" style="grid-column: 1 / -1; display:none; background:#64748b;">Cancel Edit</button>
+      </div>
+    </div>
+
+    <div class="dash-section">
+      <h2>📋 All Teachers</h2>
+      <table class="data-table">
+        <thead><tr><th>Name</th><th>Subject</th><th>City</th><th>Fee</th><th>Phone</th><th>Actions</th></tr></thead>
+        <tbody id="teacherTable"></tbody>
+      </table>
+    </div>
+
+    <div class="dash-section">
+      <h2>📩 Client Requests</h2>
+      <table class="data-table">
+        <thead><tr><th>Parent</th><th>Phone</th><th>Address</th><th>Teacher</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="requestTable"></tbody>
+      </table>
+    </div>
+
+    <div class="dash-section">
+      <h2>👥 Registered Users</h2>
+      <table class="data-table">
+        <thead><tr><th>Name</th><th>Email</th><th>Phone</th></tr></thead>
+        <tbody id="userTable"></tbody>
+      </table>
+    </div>
+
+    <div class="dash-section">
+      <h2>📢 Send Notification to All Users</h2>
+      <div class="admin-form">
+        <input type="text" id="notifTitle" class="full-width" placeholder="Notification Title *">
+        <textarea id="notifMsg" class="full-width" placeholder="Notification Message *"></textarea>
+        <button onclick="sendNotification()" style="grid-column: 1 / -1; background: linear-gradient(135deg, #3b82f6, #2563eb);">Send Notification</button>
+      </div>
+      <div style="margin-top: 20px;">
+        <h3 style="color:#0f172a;font-size:15px;margin-bottom:10px;">Sent Notifications</h3>
+        <div id="sentNotifs"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL ==================== -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>Book Teacher</h3>
+    <p class="teacher-name" id="teacherNameDisplay"></p>
+    <input type="text" id="cName" placeholder="Your Name *">
+    <input type="text" id="cPhone" placeholder="Your Phone Number *">
+    <input type="text" id="cAddress" placeholder="Your Area / Locality *">
+    <button onclick="submitRequest()">Submit Request</button>
+    <button class="close-btn" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <p>© 2025 <span class="footer-brand">Brilliant Mind Tutorials</span> | Delhi • Noida • Ghaziabad</p>
+  <p style="margin-top:8px;font-size:12px;opacity:0.7;">Connecting Parents with Best Home Tutors</p>
+</footer>
+
+<!-- ==================== TOAST ==================== -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ==================== DATA STORE ====================
+const DB = {
+  get(k) { return JSON.parse(localStorage.getItem(k) || "[]"); },
+  set(k, v) { localStorage.setItem(k, JSON.stringify(v)); },
+  add(k, item) {
+    const list = this.get(k);
+    item.id = Date.now().toString() + Math.random().toString(36).slice(2,6);
+    item.createdAt = new Date().toISOString();
+    list.push(item);
+    this.set(k, list);
+    return item;
+  },
+  update(k, id, updates) {
+    const list = this.get(k).map(x => x.id === id ? { ...x, ...updates } : x);
+    this.set(k, list);
+  },
+  remove(k, id) {
+    this.set(k, this.get(k).filter(x => x.id !== id));
+  }
+};
+
+// ==================== SUBJECTS DATA ====================
+const SUBJECTS_DATA = [
+  { name: "Mathematics", icon: "🔢", topics: "Algebra, Geometry, Trigonometry, Calculus, Statistics, Probability" },
+  { name: "Science", icon: "🔬", topics: "Physics, Chemistry, Biology basics, Environmental Science" },
+  { name: "Physics", icon: "⚛️", topics: "Mechanics, Thermodynamics, Optics, Electricity, Magnetism, Modern Physics" },
+  { name: "Chemistry", icon: "🧪", topics: "Organic, Inorganic, Physical Chemistry, Periodic Table, Chemical Bonding" },
+  { name: "Biology", icon: "🧬", topics: "Cell Biology, Genetics, Human Anatomy, Botany, Zoology" },
+  { name: "English", icon: "📖", topics: "Grammar, Literature, Writing Skills, Spoken English, Comprehension" },
+  { name: "Hindi", icon: "📝", topics: "Vyakaran, Sahitya, Nibandh, Kavita, Patra Lekhan" },
+  { name: "Social Science", icon: "🌍", topics: "History, Geography, Civics, Economics" },
+  { name: "Computer Science", icon: "💻", topics: "Python, Java, HTML/CSS, JavaScript, Data Structures, Algorithms" },
+  { name: "Accountancy", icon: "📊", topics: "Financial Accounting, Partnership, Company Accounts, Cost Accounting" },
+  { name: "Business Studies", icon: "💼", topics: "Management, Marketing, Finance, Business Environment" },
+  { name: "Economics", icon: "📈", topics: "Microeconomics, Macroeconomics, Statistics, Indian Economy" }
+];
+
+// ==================== ADMIN ====================
+const ADMIN_EMAIL = "admin@brilliantmind.com";
+const ADMIN_PASSWORD = "admin123";
+
+// ==================== SEED DATA ====================
+if (DB.get("teachers").length === 0) {
+  DB.set("teachers", [
+    { id: "t1", name: "Rahul Sharma", subject: "Mathematics", city: "Delhi", fee: 4000, phone: "9876543210", exp: "8 years", topics: "Algebra, Geometry, Trigonometry, Calculus", details: "M.Sc Mathematics, Delhi University. 500+ students taught.", createdAt: new Date().toISOString() },
+    { id: "t2", name: "Priya Verma", subject: "Physics", city: "Noida", fee: 4500, phone: "9876543211", exp: "6 years", topics: "Mechanics, Thermodynamics, Optics, Modern Physics", details: "B.Tech IIT Delhi. IIT-JEE specialist.", createdAt: new Date().toISOString() },
+    { id: "t3", name: "Amit Singh", subject: "English", city: "Ghaziabad", fee: 3000, phone: "9876543212", exp: "7 years", topics: "Grammar, Literature, Spoken English, Writing", details: "M.A English, certified IELTS trainer.", createdAt: new Date().toISOString() },
+    { id: "t4", name: "Neha Gupta", subject: "Computer Science", city: "Delhi", fee: 5000, phone: "9876543213", exp: "5 years", topics: "Python, Java, Data Structures, Web Development", details: "B.Tech CS, ex-software engineer.", createdAt: new Date().toISOString() },
+    { id: "t5", name: "Vikram Kumar", subject: "Chemistry", city: "Noida", fee: 4200, phone: "9876543214", exp: "9 years", topics: "Organic, Inorganic, Physical Chemistry", details: "M.Sc Chemistry, NEET specialist.", createdAt: new Date().toISOString() },
+    { id: "t6", name: "Sneha Agarwal", subject: "Biology", city: "Ghaziabad", fee: 3800, phone: "9876543215", exp: "6 years", topics: "Cell Biology, Genetics, Human Anatomy", details: "MBBS graduate, NEET Biology expert.", createdAt: new Date().toISOString() },
+    { id: "t7", name: "Rohit Mehta", subject: "Accountancy", city: "Delhi", fee: 4500, phone: "9876543216", exp: "10 years", topics: "Financial Accounting, Partnership, Company Accounts", details: "CA Finalist, commerce specialist.", createdAt: new Date().toISOString() },
+    { id: "t8", name: "Pooja Yadav", subject: "Science", city: "Ghaziabad", fee: 3500, phone: "9876543217", exp: "5 years", topics: "Physics, Chemistry, Biology basics", details: "B.Sc, B.Ed. Class 6-10 specialist.", createdAt: new Date().toISOString() }
+  ]);
+}
+
+if (DB.get("users").filter(u => u.email === ADMIN_EMAIL).length === 0) {
+  DB.add("users", { name: "Admin", email: ADMIN_EMAIL, phone: "0000000000", password: ADMIN_PASSWORD, role: "admin" });
+}
+
+if (DB.get("notifications").length === 0) {
+  DB.add("notifications", {
+    title: "🎉 Welcome to Brilliant Mind Tutorials!",
+    message: "Delhi, Noida, Ghaziabad mein best home tutors ab aapke ghar par. Search karo, book karo, aur padhai shuru karo!",
+    createdAt: new Date().toISOString(),
+    read: false
+  });
+}
+
+// ==================== NAVIGATION ====================
+function showPage(page) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById("page-" + page).classList.add("active");
+  window.scrollTo(0, 0);
+  if (page === "home") { renderTeachers(DB.get("teachers")); renderSubjects(); }
+  if (page === "dashboard") loadDashboard();
+  updateNav();
+}
+
+function updateNav() {
+  const user = JSON.parse(localStorage.getItem("currentUser") || "null");
+  const navAuth = document.getElementById("navAuth");
+  const bellWrap = document.getElementById("bellWrap");
+  if (user) {
+    bellWrap.style.display = "block";
+    navAuth.innerHTML = `
+      ${user.role === "admin" ? '<button class="btn-sm btn-sm-primary" onclick="showPage(\'dashboard\')">Dashboard</button>' : ''}
+      <button class="btn-sm" onclick="logoutUser()">Logout (${user.name.split(" ")[0]})</button>
+    `;
+    updateBellBadge();
+  } else {
+    bellWrap.style.display = "none";
+    navAuth.innerHTML = `
+      <button class="btn-sm" onclick="showPage('login')">Login</button>
+      <button class="btn-sm btn-sm-primary" onclick="showPage('signup')">Sign Up</button>
+    `;
+  }
+}
+
+// ==================== TOAST ====================
+function showToast(msg, type = "success") {
+  const t = document.getElementById("toast");
+  t.innerText = msg;
+  t.className = "toast show" + (type === "error" ? " error" : type === "info" ? " info" : "");
+  setTimeout(() => t.className = "toast", 3200);
+}
+
+// ==================== AUTH ====================
+function signupUser() {
+  const name = document.getElementById("signupName").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
+  const phone = document.getElementById("signupPhone").value.trim();
+  const password = document.getElementById("signupPassword").value;
+  const confirm = document.getElementById("signupConfirm").value;
+
+  if (!name || !email || !phone || !password) return showToast("Please fill all fields!", "error");
+  if (password.length < 6) return showToast("Password must be 6+ characters!", "error");
+  if (password !== confirm) return showToast("Passwords do not match!", "error");
+
+  if (DB.get("users").find(u => u.email === email)) return showToast("Email already registered!", "error");
+
+  DB.add("users", { name, email, phone, password, role: "user" });
+  showToast("Account created! Please login.");
+  setTimeout(() => { showPage("login"); document.getElementById("loginEmail").value = email; }, 900);
+}
+
+function loginUser() {
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  if (!email || !password) return showToast("Please fill all fields!", "error");
+
+  const user = DB.get("users").find(u => u.email === email && u.password === password);
+  if (!user) return showToast("Invalid email or password!", "error");
+
+  localStorage.setItem("currentUser", JSON.stringify(user));
+  showToast("Login successful! Welcome " + user.name);
+
+  setTimeout(() => {
+    if (user.role === "admin") showPage("dashboard");
+    else showPage("home");
+    document.getElementById("loginEmail").value = "";
+    document.getElementById("loginPassword").value = "";
+  }, 700);
+}
+
+function logoutUser() {
+  localStorage.removeItem("currentUser");
+  showToast("Logged out successfully", "info");
+  showPage("home");
+}
+
+// ==================== TEACHERS RENDER ====================
+let allTeachers = [];
+
+function renderTeachers(list) {
+  allTeachers = DB.get("teachers");
+  const container = document.getElementById("teachers");
+  if (list.length === 0) {
+    container.innerHTML = "<p style='text-align:center;width:100%;color:#94a3b8;padding:50px;font-size:16px;'>😕 No teachers found. Try different search!</p>";
+    return;
+  }
+  container.innerHTML = list.map(t => `
+    <div class="card">
+      <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=0f172a&color=fbbf24&size=120&bold=true">
+      <h3>${t.name}</h3>
+      <span class="subject">${t.subject}</span>
+      <p class="info">📍 <strong>${t.city}</strong></p>
+      <p class="info">🎓 ${t.exp || "N/A"} experience</p>
+      <div class="topics">📚 ${t.topics || "All topics covered"}</div>
+      <p class="fee">₹${t.fee}<small>/month</small></p>
+      <button onclick="openModal('${t.name.replace(/'/g,"\\'")}')">Book Now</button>
+    </div>
+  `).join("");
+}
+
+function searchTeachers() {
+  const name = document.getElementById("searchName").value.toLowerCase().trim();
+  const city = document.getElementById("searchCity").value;
+  const subject = document.getElementById("searchSubject").value;
+  
+  const filtered = DB.get("teachers").filter(t => {
+    const matchName = !name || 
+      t.name.toLowerCase().includes(name) || 
+      t.subject.toLowerCase().includes(name) ||
+      (t.topics && t.topics.toLowerCase().includes(name)) ||
+      (t.city && t.city.toLowerCase().includes(name));
+    const matchCity = !city || t.city === city;
+    const matchSubject = !subject || t.subject === subject;
+    return matchName && matchCity && matchSubject;
+  });
+  
+  renderTeachers(filtered);
+  document.getElementById("teachersSection").scrollIntoView({ behavior: "smooth" });
+  
+  if (filtered.length === 0) showToast("No teachers matched your search", "info");
+  else showToast(`Found ${filtered.length} teacher(s)!`, "success");
+}
+
+function filterSubject(subject, btn) {
+  document.querySelectorAll(".filters button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  if (subject === "all") renderTeachers(DB.get("teachers"));
+  else renderTeachers(DB.get("teachers").filter(t => t.subject === subject));
+}
+
+// ==================== SUBJECTS ====================
+function renderSubjects() {
+  const grid = document.getElementById("subjectsGrid");
+  if (!grid) return;
+  grid.innerHTML = SUBJECTS_DATA.map(s => `
+    <div class="subject-card" onclick="filterBySubjectCard('${s.name}')">
+      <h4>${s.icon} ${s.name}</h4>
+      <p>${s.topics}</p>
+    </div>
+  `).join("");
+}
+
+function filterBySubjectCard(subject) {
+  renderTeachers(DB.get("teachers").filter(t => t.subject === subject));
+  document.getElementById("teachersSection").scrollIntoView({ behavior: "smooth" });
+  showToast(`Showing ${subject} teachers`, "info");
+}
+
+// ==================== MODAL ====================
+let selectedTeacher = "";
+
+function openModal(name) {
+  selectedTeacher = name;
+  document.getElementById("teacherNameDisplay").innerText = "Teacher: " + name;
+  document.getElementById("modal").classList.add("active");
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("active");
+  ["cName","cPhone","cAddress"].forEach(id => document.getElementById(id).value = "");
+}
+
+function submitRequest() {
+  const name = document.getElementById("cName").value.trim();
+  const phone = document.getElementById("cPhone").value.trim();
+  const address = document.getElementById("cAddress").value.trim();
+
+  if (!name || !phone || !address) return showToast("Please fill all fields!", "error");
+
+  DB.add("requests", { name, phone, address, teacher: selectedTeacher, status: "Pending" });
+  
+  // Auto notification to admin
+  DB.add("notifications", {
+    title: "📩 New Booking Request",
+    message: `${name} (${phone}) wants to book ${selectedTeacher} from ${address}`,
+    createdAt: new Date().toISOString(),
+    read: false
+  });
+  
+  showToast("Request submitted! We'll contact you soon.");
+  closeModal();
+}
+
+// ==================== DASHBOARD ====================
+function loadDashboard() {
+  const user = JSON.parse(localStorage.getItem("currentUser") || "null");
+  if (!user || user.role !== "admin") {
+    showToast("Access denied! Admin only.", "error");
+    return showPage("login");
+  }
+  document.getElementById("adminName").innerText = user.name;
+  loadStats();
+  loadTeachersTable();
+  loadRequestsTable();
+  loadUsersTable();
+  loadSentNotifs();
+}
+
+function loadStats() {
+  document.getElementById("totalTeachers").innerText = DB.get("teachers").length;
+  document.getElementById("totalRequests").innerText = DB.get("requests").length;
+  document.getElementById("totalUsers").innerText = DB.get("users").length;
+  document.getElementById("totalNotifs").innerText = DB.get("notifications").length;
+}
+
+function saveTeacher() {
+  const editId = document.getElementById("editId").value;
+  const name = document.getElementById("tName").value.trim();
+  const subject = document.getElementById("tSubject").value;
+  const city = document.getElementById("tCity").value;
+  const fee = document.getElementById("tFee").value.trim();
+  const phone = document.getElementById("tPhone").value.trim();
+  const exp = document.getElementById("tExp").value.trim();
+  const topics = document.getElementById("tTopics").value.trim();
+  const details = document.getElementById("tDetails").value.trim();
+
+  if (!name || !subject || !city || !fee || !phone) {
+    return showToast("Please fill all required fields (*)!", "error");
+  }
+
+  if (editId) {
+    DB.update("teachers", editId, { name, subject, city, fee: Number(fee), phone, exp, topics, details });
+    showToast("✅ Teacher updated successfully!");
+  } else {
+    DB.add("teachers", { name, subject, city, fee: Number(fee), phone, exp, topics, details });
+    showToast("✅ Teacher added successfully!");
+  }
+  
+  resetForm();
+  loadTeachersTable();
+  loadStats();
+}
+
+function resetForm() {
+  ["tName","tFee","tPhone","tExp","tTopics","tDetails","editId"].forEach(id => document.getElementById(id).value = "");
+  document.getElementById("tSubject").value = "";
+  document.getElementById("tCity").value = "";
+  document.getElementById("formTitle").innerText = "➕ Add New Teacher";
+  document.getElementById("saveBtn").innerText = "Add Teacher";
+  document.getElementById("cancelBtn").style.display = "none";
+}
+
+function editTeacher(id) {
+  const t = DB.get("teachers").find(x => x.id === id);
+  if (!t) return;
+  document.getElementById("editId").value = t.id;
+  document.getElementById("tName").value = t.name;
+  document.getElementById("tSubject").value = t.subject;
+  document.getElementById("tCity").value = t.city;
+  document.getElementById("tFee").value = t.fee;
+  document.getElementById("tPhone").value = t.phone;
+  document.getElementById("tExp").value = t.exp || "";
+  document.getElementById("tTopics").value = t.topics || "";
+  document.getElementById("tDetails").value = t.details || "";
+  document.getElementById("formTitle").innerText = "✏️ Edit Teacher";
+  document.getElementById("saveBtn").innerText = "Update Teacher";
+  document.getElementById("cancelBtn").style.display = "block";
+  document.querySelector(".dash-section").scrollIntoView({ behavior: "smooth" });
+}
+
+function loadTeachersTable() {
+  const tbody = document.getElementById("teacherTable");
+  const list = DB.get("teachers");
+  if (list.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='6' style='text-align:center;color:#94a3b8;'>No teachers yet</td></tr>";
+    return;
+  }
+  tbody.innerHTML = list.map(t => `
+    <tr>
+      <td><strong>${t.name}</strong></td>
+      <td>${t.subject}</td>
+      <td>${t.city}</td>
+      <td>₹${t.fee}</td>
+      <td>${t.phone}</td>
+      <td>
+        <button class="action-btn edit-btn" onclick="editTeacher('${t.id}')">Edit</button>
+        <button class="action-btn delete-btn" onclick="deleteTeacher('${t.id}')">Delete</button>
+      </td>
+    </tr>
+  `).join("");
+}
+
+function deleteTeacher(id) {
+  if (!confirm("Delete this teacher?")) return;
+  DB.remove("teachers", id);
+  showToast("Teacher deleted", "info");
+  loadTeachersTable();
+  loadStats();
+}
+
+function loadRequestsTable() {
+  const tbody = document.getElementById("requestTable");
+  const list = DB.get("requests");
+  if (list.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='6' style='text-align:center;color:#94a3b8;'>No requests yet</td></tr>";
+    return;
+  }
+  tbody.innerHTML = list.map(r => `
+    <tr>
+      <td>${r.name}</td>
+      <td>${r.phone}</td>
+      <td>${r.address || "-"}</td>
+      <td>${r.teacher}</td>
+      <td><span style="background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600;">${r.status}</span></td>
+      <td><button class="action-btn delete-btn" onclick="deleteRequest('${r.id}')">Delete</button></td>
+    </tr>
+  `).join("");
+}
+
+function deleteRequest(id) {
+  if (!confirm("Delete this request?")) return;
+  DB.remove("requests", id);
+  showToast("Request deleted", "info");
+  loadRequestsTable();
+  loadStats();
+}
+
+function loadUsersTable() {
+  const tbody = document.getElementById("userTable");
+  const list = DB.get("users");
+  if (list.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='3' style='text-align:center;color:#94a3b8;'>No users yet</td></tr>";
+    return;
+  }
+  tbody.innerHTML = list.map(u => `
+    <tr><td>${u.name}</td><td>${u.email}</td><td>${u.phone}</td></tr>
+  `).join("");
+}
+
+// ==================== NOTIFICATIONS ====================
+function sendNotification() {
+  const title = document.getElementById("notifTitle").value.trim();
+  const msg = document.getElementById("notifMsg").value.trim();
+  if (!title || !msg) return showToast("Please fill title and message!", "error");
+  
+  DB.add("notifications", { title, message: msg, createdAt: new Date().toISOString(), read: false });
+  document.getElementById("notifTitle").value = "";
+  document.getElementById("notifMsg").value = "";
+  showToast("📢 Notification sent to all users!");
+  loadSentNotifs();
+  loadStats();
+}
+
+function loadSentNotifs() {
+  const box = document.getElementById("sentNotifs");
+  if (!box) return;
+  const list = DB.get("notifications").slice().reverse();
+  if (list.length === 0) {
+    box.innerHTML = "<p style='color:#94a3b8;font-size:13px;'>No notifications sent yet</p>";
+    return;
+  }
+  box.innerHTML = list.map(n => `
+    <div style="padding:12px;background:#f8fafc;border-radius:10px;margin-bottom:8px;border-left:4px solid #3b82f6;">
+      <strong style="color:#0f172a;font-size:14px;">${n.title}</strong>
+      <p style="color:#64748b;font-size:13px;margin-top:4px;">${n.message}</p>
+      <small style="color:#94a3b8;font-size:11px;">${new Date(n.createdAt).toLocaleString()}</small>
+    </div>
+  `).join("");
+}
+
+function toggleNotifPanel() {
+  const panel = document.getElementById("notifPanel");
+  panel.classList.toggle("active");
+  if (panel.classList.contains("active")) renderNotifications();
+}
+
+function renderNotifications() {
+  const box = document.getElementById("notifList");
+  const list = DB.get("notifications").slice().reverse();
+  if (list.length === 0) {
+    box.innerHTML = "<div class='notif-empty'>🔔 No notifications yet</div>";
+    return;
+  }
+  box.innerHTML = list.map(n => `
+    <div class="notif-item ${n.read ? '' : 'unread'}">
+      <h4>${n.title}</h4>
+      <p>${n.message}</p>
+      <small>${new Date(n.createdAt).toLocaleString()}</small>
+    </div>
+  `).join("");
+  
+  // Mark all as read
+  setTimeout(() => {
+    const all = DB.get("notifications").map(n => ({ ...n, read: true }));
+    DB.set("notifications", all);
+    updateBellBadge();
+  }, 2000);
+}
+
+function updateBellBadge() {
+  const unread = DB.get("notifications").filter(n => !n.read).length;
+  const badge = document.getElementById("bellBadge");
+  if (unread > 0) {
+    badge.style.display = "flex";
+    badge.innerText = unread;
+  } else {
+    badge.style.display = "none";
+  }
+}
+
+// Close notif on outside click
+document.addEventListener("click", (e) => {
+  const panel = document.getElementById("notifPanel");
+  const bellWrap = document.getElementById("bellWrap");
+  if (panel && panel.classList.contains("active")) {
+    if (!panel.contains(e.target) && bellWrap && !bellWrap.contains(e.target)) {
+      panel.classList.remove("active");
+    }
+  }
+});
+
+// ==================== INIT ====================
+renderTeachers(DB.get("teachers"));
+renderSubjects();
+updateNav();
+
+// Enter key shortcuts
+document.addEventListener("keypress", e => {
+  if (e.key === "Enter") {
+    if (document.getElementById("page-login").classList.contains("active")) loginUser();
+    else if (document.getElementById("page-signup").classList.contains("active")) signupUser();
+  }
+});
+</script>
+
+</body>
+</html>
